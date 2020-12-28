@@ -4,9 +4,11 @@ import userReducer from "./reducers/userReducer.js";
 import dataReducer from "./reducers/dataReducer.js";
 import uiReducer from "./reducers/uiReducer.js";
 
-const initialState = {};
+// const initialState = {};
 
-const middleware = [thunk];
+// const middleware = [thunk];
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const reducers = combineReducers({
   user: userReducer,
@@ -14,13 +16,18 @@ const reducers = combineReducers({
   UI: uiReducer,
 });
 
+// const store = createStore(
+//   reducers,
+//   initialState,
+//   compose(
+//     applyMiddleware(...middleware),
+//     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+//   )
+// );
+
 const store = createStore(
   reducers,
-  initialState,
-  compose(
-    applyMiddleware(...middleware),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
+  composeEnhancers(applyMiddleware(thunk))
 );
 
 export default store;
